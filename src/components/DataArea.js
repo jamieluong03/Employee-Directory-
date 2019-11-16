@@ -71,22 +71,22 @@ const DataArea = () => {
     const filter = event.target.value;
     const filteredList = developerState.users.filter(item => {
       // merge data together, then see if user input is anywhere inside
-      console.log("Item", item);
+      // console.log("Item", item);
       // let values = Object.values(item)
       //   .join("")
       //   .toLowerCase();
       let values = item.name.first.toLowerCase();
-        console.log("VALUES", values)
+        // console.log("VALUES", values)
       return values.indexOf(filter.toLowerCase()) !== -1;
     });
-    console.log(filteredList)
+    // console.log(filteredList)
     setDeveloperState({ ...developerState, filteredUsers: filteredList });
   };
 
 
   useEffect(() => {
     API.getUsers().then(results => {
-      console.log(results);
+      // console.log(results);
       setDeveloperState({
         ...developerState, users: results.data.results, filteredUsers: results.data.results
       });
