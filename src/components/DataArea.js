@@ -102,14 +102,8 @@ const handleSearchChange = event => {
 
   return (
     <BodyContext.Provider 
-    value={
-      developerState.users, 
-      developerState.order, 
-      developerState.filteredUsers, 
-      developerState.headings,
-      handleSearchChange 
-      }>
-    <Nav handleSearchChange={handleSearchChange} />
+    value={{developerState, handleSearchChange, handleSort}}>
+    <Nav/>
     <div className="data-area">
       <DataTable
         headings={developerState.headings}

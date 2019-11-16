@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../styles/SearchBox.css";
+import BodyContext from "../utils/BodyContext";
 
-function SearchBox({ handleSearchChange }) {
+const SearchBox = () => {
+  const context = useContext(BodyContext);
+
   return (
     <div className="searchbox">
       <form className="form-inline">
@@ -10,7 +13,7 @@ function SearchBox({ handleSearchChange }) {
           type="search"
           placeholder="Search"
           aria-label="Search"
-          onChange={e => handleSearchChange(e)}
+          onChange={e => context.handleSearchChange(e)}
         />
         <button className="btn my-2 my-sm-0" type="submit">
           Search

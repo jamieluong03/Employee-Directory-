@@ -1,8 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import DataBody from "./DataBody";
 import "../styles/DataTable.css";
+import BodyContext from "../utils/BodyContext";
 
-function DataTable({ headings, users, handleSort }) {
+const DataTable = () => {
+  const context = useContext(BodyContext);
+
   return (
     <div className="datatable mt-5">
       <table
@@ -11,14 +14,14 @@ function DataTable({ headings, users, handleSort }) {
       >
         <thead>
           <tr>
-            {headings.map(({ name, width }) => {
+            {context.headings.map(({ name, width }) => {
               return (
                 <th
                   className="col"
                   key={name}
                   style={{ width }}
                   onClick={() => {
-                    handleSort(name.toLowerCase());
+                    context.handleSort(name.toLowerCase());
                   }}
                 >
                   {name}
@@ -29,7 +32,7 @@ function DataTable({ headings, users, handleSort }) {
           </tr>
         </thead>
 
-        <DataBody users={users} />
+        <DataBody />
       </table>
     </div>
   );
