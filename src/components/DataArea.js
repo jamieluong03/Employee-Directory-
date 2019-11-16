@@ -3,6 +3,7 @@ import DataTable from "./DataTable";
 import Nav from "./Nav";
 import API from "../utils/API";
 import "../styles/DataArea.css";
+import BodyContext from "../utils/BodyContext"
 
 const DataArea = () => {
 
@@ -86,7 +87,7 @@ const handleSearchChange = event => {
       .toLowerCase();
     return values.indexOf(filter.toLowerCase()) !== -1;
   });
-  setDeveloperState({ ...developerState, filteredUsers: filteredList });
+  setDeveloperState({ ...developerState,filteredUsers: filteredList });
   };
 
 
@@ -100,7 +101,14 @@ const handleSearchChange = event => {
   }, []);
 
   return (
-    <>
+    <BodyContext.Provider 
+    value={
+      developerState.users, 
+      developerState.order, 
+      developerState.filteredUsers, 
+      developerState.headings,
+      handleSearchChange 
+      }>
     <Nav handleSearchChange={handleSearchChange} />
     <div className="data-area">
       <DataTable
@@ -109,7 +117,7 @@ const handleSearchChange = event => {
         handleSort={handleSort}
       />
     </div>
-    </>
+    </BodyContext.Provider>
   );
 }
 
