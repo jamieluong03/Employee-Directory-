@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import DataBody from "./DataBody";
 import "../styles/DataTable.css";
 import BodyContext from "../utils/BodyContext";
@@ -7,6 +7,7 @@ const DataTable = () => {
   const context = useContext(BodyContext);
 
   return (
+
     <div className="datatable mt-5">
       <table
         id="table"
@@ -14,7 +15,7 @@ const DataTable = () => {
       >
         <thead>
           <tr>
-            {context.headings.map(({ name, width }) => {
+            {context.developerState.headings.map(({ name, width }) => {
               return (
                 <th
                   className="col"
