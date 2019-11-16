@@ -6,31 +6,44 @@ import "../styles/DataArea.css";
 
 const DataArea = () => {
 
-  const [users, setUsers] = useState([{}]);
-  const [order, setOrder] = useState("descend");
-  const [filteredUsers, setFilteredUsers] = useState([{}]);
-  const [headings, setHeadings] = useState([
-    { name: "Image", width: "10%" },
-    { name: "Name", width: "10%" },
-    { name: "Phone", width: "20%" },
-    { name: "Email", width: "20%" },
-    { name: "DOB", width: "10%" }
-  ])
+  const [developerState, setDeveloperState] = useState({
+    users: [{}],
+    order: "descend",
+    filteredUsers: [{}],
+    headings: [
+      { name: "Image", width: "10%" },
+      { name: "Name", width: "10%" },
+      { name: "Phone", width: "20%" },
+      { name: "Email", width: "20%" },
+      { name: "DOB", width: "10%" }
+    ]
+  });
+
+  // const [users, setUsers] = useState([{}]);
+  // const [order, setOrder] = useState("descend");
+  // const [filteredUsers, setFilteredUsers] = useState([{}]);
+  // const [headings, setHeadings] = useState([
+  //   { name: "Image", width: "10%" },
+  //   { name: "Name", width: "10%" },
+  //   { name: "Phone", width: "20%" },
+  //   { name: "Email", width: "20%" },
+  //   { name: "DOB", width: "10%" }
+  // ])
 
 const handleSort = heading => {
   console.log(heading);
-  if (order === "descend") {
-    setOrder({
+  if (developerState.order === "descend") {
+    setDeveloperState({
       order: "ascend"
     })
   } else {
-    setOrder({
+    setDeveloperState({
       order: "descend"
     })
   }
 
   const compareFnc = (a, b) => {
-    if (order === "ascend") {
+    if (developerState.order === "ascend") {
       // account for missing values
       if (a[heading] === undefined) {
         return 1;
@@ -59,32 +72,29 @@ const handleSort = heading => {
     }
 
   }
-    const sortedUsers = filteredUsers.sort(compareFnc);
-    setFilteredUsers({ filteredUsers: sortedUsers });
+    const sortedUsers = developerState.filteredUsers.sort(compareFnc);
+    setDeveloperState({ ...developerState, filteredUsers: sortedUsers });
   };
 
 const handleSearchChange = event => {
   console.log(event.target.value);
   const filter = event.target.value;
-  const filteredList = users.filter(item => {
+  const filteredList = developerState.users.filter(item => {
     // merge data together, then see if user input is anywhere inside
     let values = Object.values(item)
       .join("")
       .toLowerCase();
     return values.indexOf(filter.toLowerCase()) !== -1;
   });
-  setFilteredUsers({ filteredUsers: filteredList });
+  setDeveloperState({ ...developerState, filteredUsers: filteredList });
   };
 
 
   useEffect(() => {
     API.getUsers().then(results => {
       // console.log(results);
-      setUsers({
-        users: results.data.results,
-      });
-      setFilteredUsers({
-        filteredUsers: results.data.results
+      setDeveloperState({
+        ...developerState, users: results.data.results, filteredUsers: results.data.results
       });
     });
   }, []);
@@ -94,8 +104,8 @@ const handleSearchChange = event => {
     <Nav handleSearchChange={handleSearchChange} />
     <div className="data-area">
       <DataTable
-        headings={headings}
-        users={filteredUsers}
+        headings={developerState.headings}
+        users={developerState.filteredUsers}
         handleSort={handleSort}
       />
     </div>
