@@ -9,7 +9,7 @@ const DataArea = () => {
 
   const [developerState, setDeveloperState] = useState({
     users: [],
-    order: "descend",
+    order: "ascend",
     filteredUsers: [],
     headings: [
       { name: "Image", width: "10%" },
